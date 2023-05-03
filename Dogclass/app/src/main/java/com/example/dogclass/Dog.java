@@ -37,6 +37,9 @@ public class Dog {
     void setHungerLevel(double x){
         hungerLevel = x;
     }
+    void setAge(int x){
+        age = x;
+    }
     double getHungerLevel(){
         return hungerLevel;
     }

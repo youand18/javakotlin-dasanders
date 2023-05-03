@@ -23,5 +23,13 @@ public class DogTest {
         boolean actual = pug.isHungry();
         assertEquals(expect, actual);
     }
-
+    @Test
+    public void isNameJoe() {
+        assertEquals("Joe",pug.getName());
+    }
+    @Test
+    public void changeAge() {
+        pug.setAge(13);
+        assertEquals(13,pug.getAge());
+    }
 }
