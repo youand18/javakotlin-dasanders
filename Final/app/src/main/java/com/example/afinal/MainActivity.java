@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.CsvBindByName;
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         rand = new Random();
         winners = new CsvToBeanBuilder<TonyAwardWinner>(new InputStreamReader(getResources().openRawResource(R.raw.tonys)))
                 .withType(TonyAwardWinner.class).build().parse();
@@ -77,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
         answerEditText = findViewById(R.id.answerText);
         submitButton = findViewById(R.id.guessButton);
         resultTextView = findViewById(R.id.resultText);
+
+        Button backToHomeButton = findViewById(R.id.backToHomeButton);
+        backToHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                startActivity(intent);
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
