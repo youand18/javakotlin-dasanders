@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.CsvBindByName;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private Random rand;
 
     private TextView questionTextView;
-    private EditText answerEditText;
+    private Button[] options = new Button[4];
     private Button submitButton;
     private TextView resultTextView;
 
@@ -78,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 .withType(TonyAwardWinner.class).build().parse();
 
         questionTextView = findViewById(R.id.questionText);
-        answerEditText = findViewById(R.id.answerText);
-        submitButton = findViewById(R.id.guessButton);
         resultTextView = findViewById(R.id.resultText);
 
         Button backToHomeButton = findViewById(R.id.backToHomeButton);
@@ -91,32 +90,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer();
-                generateQuestion();
-            }
-        });
+        options[0] = findViewById(R.id.option1);
+        options[1] = findViewById(R.id.option2);
+        options[2] = findViewById(R.id.option3);
+        options[3] = findViewById(R.id.option4);
+
+        for (Button option : options) {
+            option.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkAnswer(((Button) v).getText().toString());
+                }
+            });
+        }
         generateQuestion();
     }
 
     private void generateQuestion(){
-        currentWinner = winners.get(rand.nextInt(winners.size()));
-        questionTextView.setText(
-                "Guess who won the Tony in the year " +
-                        currentWinner.getYear() +
-                        " for the category " +
-                        currentWinner.getCategory() + ":");
-        answerEditText.setText("");
+        int winnerIndex = rand.nextInt(winners.size());
+        currentWinner = winners.get(winnerIndex);
+        questionTextView.setText(String.format("Who won the Tony for '%s' in %s?", currentWinner.getCategory(), currentWinner.getYear()));
+
+        int correctOption = rand.nextInt(4);
+        for (int i = 0; i < 4; i++) {
+            if (i == correctOption) {
+                options[i].setText(currentWinner.getWinner());
+            } else {
+                TonyAwardWinner incorrectWinner;
+                do {
+                    int incorrectIndex = rand.nextInt(winners.size());
+                    incorrectWinner = winners.get(incorrectIndex);
+                } while (incorrectWinner.getWinner().equals(currentWinner.getWinner()) || !incorrectWinner.getCategory().equals(currentWinner.getCategory()));
+                options[i].setText(incorrectWinner.getWinner());
+            }
+        }
     }
 
-    private void checkAnswer(){
-        String userInput = answerEditText.getText().toString();
-        if (userInput.equalsIgnoreCase(currentWinner.getWinner())) {
+    private void checkAnswer(String answer){
+        if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
+            resultTextView.setText("Correct! They won for the show " + currentWinner.getShow());
+        } else if (answer.equals(currentWinner)) {
             resultTextView.setText("Correct!");
+        } else if (!currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")){
+            resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner() + " for the show " + currentWinner.getShow());
         } else {
             resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner());
         }
+        generateQuestion();
     }
 }
