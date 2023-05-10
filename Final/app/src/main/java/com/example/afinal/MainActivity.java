@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkAnswer(String answer){
         if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
-            resultTextView.setText(currentWinner.getWinner() + " is Correct! They won for the show " + currentWinner.getShow());
+            resultTextView.setText(currentWinner.getWinner() + " is Correct! They won for the show " + currentWinner.getShow() + " in the year " + currentWinner.getYear() + ".");
         } else if (answer.equals(currentWinner.getWinner())) {
             resultTextView.setText(currentWinner.getWinner() + " is Correct!");
         } else if (!currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")){

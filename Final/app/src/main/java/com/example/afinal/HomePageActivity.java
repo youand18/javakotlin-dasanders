@@ -14,10 +14,18 @@ public class HomePageActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home_page);
 
         Button guessingGameButton = findViewById(R.id.guessingGameButton);
+        Button flashcardsButton = findViewById(R.id.flashcardsButton);
         guessingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePageActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        flashcardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, FlashcardsActivity.class);
                 startActivity(intent);
             }
         });
