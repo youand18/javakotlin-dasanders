@@ -19,47 +19,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 import java.util.Random;
+import com.example.afinal.TonyAwardWinner;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static class TonyAwardWinner {
-        @CsvBindByName(column = "Year Won")
-        private String year;
 
-        @CsvBindByName(column = "Category Won")
-        private String category;
-
-        @CsvBindByName(column = "Who Won?")
-        private String winner;
-
-        @CsvBindByName(column = "What Show Was It? (Might Be Same as Last)")
-        private String show;
-
-        public String getYear() {
-            return year;
-        }
-        public void setYear(String year) {
-            this.year = year;
-        }
-        public String getCategory() {
-            return category;
-        }
-        public void setCategory(String category) {
-            this.category = category;
-        }
-        public String getWinner() {
-            return winner;
-        }
-        public void setWinner(String winner) {
-            this.winner = winner;
-        }
-        public String getShow() {
-            return show;
-        }
-        public void setShow(String show) {
-            this.show = show;
-        }
-    }
 
     private List<TonyAwardWinner> winners;
     private TonyAwardWinner currentWinner;
@@ -135,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkAnswer(String answer){
         if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
-            resultTextView.setText("Correct! They won for the show " + currentWinner.getShow());
+            resultTextView.setText(currentWinner.getWinner() + " is Correct! They won for the show " + currentWinner.getShow());
         } else if (answer.equals(currentWinner.getWinner())) {
-            resultTextView.setText("Correct!");
+            resultTextView.setText(currentWinner.getWinner() + " is Correct!");
         } else if (!currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")){
             resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner() + " for the show " + currentWinner.getShow());
         } else {
