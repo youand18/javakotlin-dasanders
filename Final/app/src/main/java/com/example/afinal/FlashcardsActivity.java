@@ -1,5 +1,6 @@
 package com.example.afinal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,7 +57,9 @@ public class FlashcardsActivity extends AppCompatActivity {
             button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             button.setText(category);
             button.setOnClickListener(v -> {
-                Toast.makeText(FlashcardsActivity.this, category, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FlashcardsActivity.this, FlashcardDisplayActivity.class);
+                intent.putExtra("selectedCategory", category);
+                startActivity(intent);
             });
             linearLayout.addView(button);
         }

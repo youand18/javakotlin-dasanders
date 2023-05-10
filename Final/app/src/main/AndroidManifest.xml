@@ -11,18 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Final"
         tools:targetApi="31">
+        <activity
+            android:name=".FlashcardDisplayActivity"
+            android:exported="false" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".HomePageActivity"
+        <activity
+            android:name=".HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FlashcardsActivity"
+        <activity
+            android:name=".FlashcardsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
