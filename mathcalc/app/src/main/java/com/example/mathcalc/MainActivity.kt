@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import kotlin.math.pow
 import kotlin.math.sqrt
 class MainActivity : AppCompatActivity() {
@@ -21,16 +22,21 @@ class MainActivity : AppCompatActivity() {
         val stdDevResult = findViewById<TextView>(R.id.stdDevResult)
 
         calculateButton.setOnClickListener {
-            val numbers = numberInput.text.toString().split(",").map { it.trim().toDouble() }
-            val min = numbers.minOrNull()
-            val avg = numbers.average()
-            val max = numbers.maxOrNull()
-            val stdDev = sqrt(numbers.map {it-avg}.map {it*it}.average())
+            try {
+                val numbers = numberInput.text.toString().split(",").map { it.trim().toDouble() }
+                val min = numbers.minOrNull()
+                val avg = numbers.average()
+                val max = numbers.maxOrNull()
+                val stdDev = sqrt(numbers.map { it - avg }.map { it * it }.average())
 
-            minResult.text = "Min: $min"
-            avgResult.text = "Average: $avg"
-            maxResult.text = "Max: $max"
-            stdDevResult.text = "Standard Deviation: $stdDev"
+                minResult.text = "Min: $min"
+                avgResult.text = "Average: $avg"
+                maxResult.text = "Max: $max"
+                stdDevResult.text = "Standard Deviation: $stdDev"
+
+            } catch (e: java.lang.NumberFormatException) {
+                Toast.makeText(this, "Invalid Entry", Toast.LENGTH_LONG).show()
+            }
         }
 
 
