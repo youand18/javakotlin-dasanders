@@ -14,6 +14,9 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.CsvBindByName;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.Random;
 
@@ -112,24 +115,28 @@ public class MainActivity extends AppCompatActivity {
         questionTextView.setText(String.format("Who won the Tony for '%s' in %s?", currentWinner.getCategory(), currentWinner.getYear()));
 
         int correctOption = rand.nextInt(4);
-        for (int i = 0; i < 4; i++) {
-            if (i == correctOption) {
-                options[i].setText(currentWinner.getWinner());
-            } else {
-                TonyAwardWinner incorrectWinner;
-                do {
-                    int incorrectIndex = rand.nextInt(winners.size());
-                    incorrectWinner = winners.get(incorrectIndex);
-                } while (incorrectWinner.getWinner().equals(currentWinner.getWinner()) || !incorrectWinner.getCategory().equals(currentWinner.getCategory()));
-                options[i].setText(incorrectWinner.getWinner());
+        Set<String> incorrectOptions = new HashSet<>();
+        while (incorrectOptions.size() < 3) {
+            int incorrectIndex = rand.nextInt(winners.size());
+            TonyAwardWinner incorrectWinner = winners.get(incorrectIndex);
+            if (!incorrectWinner.getWinner().equals(currentWinner.getWinner()) && incorrectWinner.getCategory().equals(currentWinner.getCategory())){
+                incorrectOptions.add(incorrectWinner.getWinner());
             }
         }
+
+        List<String> allOptions = new ArrayList<>(incorrectOptions);
+        allOptions.add(correctOption, currentWinner.getWinner());
+
+        for (int i = 0; i < 4; i++){
+            options[i].setText(allOptions.get(i));
+        }
+
     }
 
     private void checkAnswer(String answer){
         if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
             resultTextView.setText("Correct! They won for the show " + currentWinner.getShow());
-        } else if (answer.equals(currentWinner)) {
+        } else if (answer.equals(currentWinner.getWinner())) {
             resultTextView.setText("Correct!");
         } else if (!currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")){
             resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner() + " for the show " + currentWinner.getShow());
