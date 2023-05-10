@@ -52,6 +52,9 @@ public class FlashcardDisplayActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(selectedCategory);
+        }
         Button backToHomeButton = findViewById(R.id.backToHomeButton);
         backToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
