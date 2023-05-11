@@ -28,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private List<TonyAwardWinner> winners;
     private TonyAwardWinner currentWinner;
     private Random rand;
-
+    private int correctGuesses = 0;
+    private int incorrectGuesses = 0;
     private TextView questionTextView;
     private Button[] options = new Button[4];
     private Button submitButton;
     private TextView resultTextView;
+    private TextView correctTextView;
+    private TextView incorrectTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         questionTextView = findViewById(R.id.questionText);
         resultTextView = findViewById(R.id.resultText);
-
+        correctTextView = findViewById(R.id.correctText);
+        correctTextView.setText("Correct Guesses: " + correctGuesses);
+        incorrectTextView = findViewById(R.id.incorrectText);
+        incorrectTextView.setText("Incorrect Guesses: " + incorrectGuesses);
         Button backToHomeButton = findViewById(R.id.backToHomeButton);
         backToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +106,24 @@ public class MainActivity extends AppCompatActivity {
     private void checkAnswer(String answer){
         if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
             resultTextView.setText(currentWinner.getWinner() + " is Correct! They won for the show " + currentWinner.getShow() + " in the year " + currentWinner.getYear() + ".");
+            correctGuesses++;
+            correctTextView.setText("Correct Guesses: " + correctGuesses);
+
         } else if (answer.equals(currentWinner.getWinner())) {
             resultTextView.setText(currentWinner.getWinner() + " is Correct!");
+            correctGuesses++;
+            correctTextView.setText("Correct Guesses: " + correctGuesses);
+
         } else if (!currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")){
+            incorrectGuesses++;
             resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner() + " for the show " + currentWinner.getShow());
+            incorrectTextView.setText("Incorrect Guesses: " + incorrectGuesses);
+
         } else {
+            incorrectGuesses++;
             resultTextView.setText("Sorry, the correct answer was " + currentWinner.getWinner());
+            incorrectTextView.setText("Incorrect Guesses: " + incorrectGuesses);
+
         }
         generateQuestion();
     }

@@ -66,6 +66,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp" />
+        <TextView
+            android:id="@+id/correctText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/incorrectText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
