@@ -20,7 +20,7 @@ You can then click the "Flip" button to see the answer:
 
 ![](Screenshots/flashcardback.png)
 
-You navigate to the next card with the "Next" button and the "Shuffle" button will shuffle the set.
+You navigate to the next card with the "Next Card" button and the "Shuffle" button will shuffle the set.
 
 ## Guessing Game Screenshot
 

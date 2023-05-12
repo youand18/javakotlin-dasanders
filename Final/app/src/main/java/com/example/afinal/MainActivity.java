@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private List<TonyAwardWinner> winners;
-    private TonyAwardWinner currentWinner;
+    public List<TonyAwardWinner> winners;
+    TonyAwardWinner currentWinner;
     private Random rand;
-    private int correctGuesses = 0;
-    private int incorrectGuesses = 0;
-    private TextView questionTextView;
-    private Button[] options = new Button[4];
+    public int correctGuesses = 0;
+    public int incorrectGuesses = 0;
+    public TextView questionTextView;
+    public Button[] options = new Button[4];
     private Button submitButton;
-    private TextView resultTextView;
+    public TextView resultTextView;
     private TextView correctTextView;
     private TextView incorrectTextView;
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         generateQuestion();
     }
 
-    private void generateQuestion(){
+    public void generateQuestion(){
         int winnerIndex = rand.nextInt(winners.size());
         currentWinner = winners.get(winnerIndex);
         questionTextView.setText(String.format("Who won the Tony for '%s' in %s?", currentWinner.getCategory(), currentWinner.getYear()));
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void checkAnswer(String answer){
+    public void checkAnswer(String answer){
         if (answer.equals(currentWinner.getWinner()) && !currentWinner.getCategory().equals("Best Musical") && !currentWinner.getCategory().equals("Best Play") && !currentWinner.getCategory().equals("Best Revival of a Musical") && !currentWinner.getCategory().equals("Best Revival of a Play")) {
             resultTextView.setText(currentWinner.getWinner() + " is Correct! They won for the show " + currentWinner.getShow() + " in the year " + currentWinner.getYear() + ".");
             correctGuesses++;
